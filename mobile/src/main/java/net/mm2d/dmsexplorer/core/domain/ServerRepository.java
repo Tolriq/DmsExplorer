@@ -8,26 +8,14 @@
 package net.mm2d.dmsexplorer.core.domain;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
-import java.util.List;
+import io.reactivex.Observable;
 
 
 /**
  * @author <a href="mailto:ryo@mm2d.net">大前良介 (OHMAE Ryosuke)</a>
  */
 public interface ServerRepository {
-    interface OnDiscoverListener {
-        void onDiscover(@NonNull Server server);
-    }
-
-    interface OnLostListener {
-        void onLost(@NonNull Server server);
-    }
-
-    void setOnDiscoverListener(@Nullable OnDiscoverListener listener);
-
-    void setOnLostListener(@Nullable OnLostListener listener);
 
     void initialize();
 
@@ -40,5 +28,5 @@ public interface ServerRepository {
     void stopSearch();
 
     @NonNull
-    List<Server> getServerList();
+    Observable<DiscoveryEvent> discovery();
 }

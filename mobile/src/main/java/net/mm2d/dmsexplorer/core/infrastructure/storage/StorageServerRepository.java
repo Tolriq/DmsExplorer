@@ -8,25 +8,19 @@
 package net.mm2d.dmsexplorer.core.infrastructure.storage;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
-import net.mm2d.dmsexplorer.core.domain.Server;
+import net.mm2d.dmsexplorer.core.domain.DiscoveryEvent;
 import net.mm2d.dmsexplorer.core.domain.ServerRepository;
 
-import java.util.Collections;
-import java.util.List;
+import io.reactivex.Observable;
+import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.Subject;
 
 /**
  * @author <a href="mailto:ryo@mm2d.net">大前良介 (OHMAE Ryosuke)</a>
  */
 public class StorageServerRepository implements ServerRepository {
-    @Override
-    public void setOnDiscoverListener(@Nullable final OnDiscoverListener listener) {
-    }
-
-    @Override
-    public void setOnLostListener(@Nullable final OnLostListener listener) {
-    }
+    private Subject<DiscoveryEvent> mDiscoveryEventSubject = PublishSubject.create();
 
     @Override
     public void initialize() {
@@ -50,7 +44,7 @@ public class StorageServerRepository implements ServerRepository {
 
     @NonNull
     @Override
-    public List<Server> getServerList() {
-        return Collections.emptyList();
+    public Observable<DiscoveryEvent> discovery() {
+        return mDiscoveryEventSubject;
     }
 }

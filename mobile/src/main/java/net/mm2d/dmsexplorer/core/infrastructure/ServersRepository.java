@@ -8,82 +8,60 @@
 package net.mm2d.dmsexplorer.core.infrastructure;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
-import net.mm2d.dmsexplorer.core.domain.Server;
+import net.mm2d.dmsexplorer.core.domain.DiscoveryEvent;
 import net.mm2d.dmsexplorer.core.domain.ServerRepository;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+
+import io.reactivex.Observable;
 
 /**
  * @author <a href="mailto:ryo@mm2d.net">大前良介 (OHMAE Ryosuke)</a>
  */
 public class ServersRepository implements ServerRepository {
-    private final Collection<ServerRepository> mRepositories = new ArrayList<>();
+    @NonNull
+    private final Collection<ServerRepository> mRepositories;
 
     public ServersRepository(ServerRepository... repositories) {
-        Collections.addAll(mRepositories, repositories);
-    }
-
-    @Override
-    public void setOnDiscoverListener(@Nullable final OnDiscoverListener listener) {
-        for (final ServerRepository repository : mRepositories) {
-            repository.setOnDiscoverListener(listener);
-        }
-    }
-
-    @Override
-    public void setOnLostListener(@Nullable final OnLostListener listener) {
-        for (final ServerRepository repository : mRepositories) {
-            repository.setOnLostListener(listener);
-        }
+        mRepositories = Arrays.asList(repositories);
     }
 
     @Override
     public void initialize() {
-        for (final ServerRepository repository : mRepositories) {
-            repository.initialize();
-        }
+        Observable.fromIterable(mRepositories)
+                .subscribe(ServerRepository::initialize);
     }
 
     @Override
     public void terminate() {
-        for (final ServerRepository repository : mRepositories) {
-            repository.terminate();
-        }
+        Observable.fromIterable(mRepositories)
+                .subscribe(ServerRepository::terminate);
     }
 
     @Override
     public void reset() {
-        for (final ServerRepository repository : mRepositories) {
-            repository.reset();
-        }
+        Observable.fromIterable(mRepositories)
+                .subscribe(ServerRepository::reset);
     }
 
     @Override
     public void startSearch() {
-        for (final ServerRepository repository : mRepositories) {
-            repository.startSearch();
-        }
+        Observable.fromIterable(mRepositories)
+                .subscribe(ServerRepository::startSearch);
     }
 
     @Override
     public void stopSearch() {
-        for (final ServerRepository repository : mRepositories) {
-            repository.stopSearch();
-        }
+        Observable.fromIterable(mRepositories)
+                .subscribe(ServerRepository::stopSearch);
     }
 
     @NonNull
     @Override
-    public List<Server> getServerList() {
-        final List<Server> result = new ArrayList<>();
-        for (final ServerRepository repository : mRepositories) {
-            result.addAll(repository.getServerList());
-        }
-        return result;
+    public Observable<DiscoveryEvent> discovery() {
+        return Observable.fromIterable(mRepositories)
+                .flatMap(ServerRepository::discovery);
     }
 }

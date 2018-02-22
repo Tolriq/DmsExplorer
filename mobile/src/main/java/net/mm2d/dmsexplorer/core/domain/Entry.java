@@ -11,8 +11,6 @@ import android.support.annotation.NonNull;
 
 import net.mm2d.dmsexplorer.domain.entity.ContentType;
 
-import java.util.List;
-
 import io.reactivex.Observable;
 
 /**
@@ -40,9 +38,6 @@ public interface Entry {
 
     @NonNull
     Observable<Entry> readEntries(boolean noCache);
-
-    @NonNull
-    List<Entry> getCachedEntries();
 
     @NonNull
     PlayList createPlayList(ContentType type);
