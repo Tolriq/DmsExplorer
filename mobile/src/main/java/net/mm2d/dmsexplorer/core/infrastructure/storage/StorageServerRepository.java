@@ -44,7 +44,7 @@ public class StorageServerRepository implements ServerRepository {
 
     @NonNull
     @Override
-    public Observable<DiscoveryEvent> discovery() {
+    public Observable<DiscoveryEvent> getDiscoveryEvent() {
         return mDiscoveryEventSubject;
     }
 }

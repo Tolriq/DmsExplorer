@@ -60,8 +60,8 @@ public class ServersRepository implements ServerRepository {
 
     @NonNull
     @Override
-    public Observable<DiscoveryEvent> discovery() {
+    public Observable<DiscoveryEvent> getDiscoveryEvent() {
         return Observable.fromIterable(mRepositories)
-                .flatMap(ServerRepository::discovery);
+                .flatMap(ServerRepository::getDiscoveryEvent);
     }
 }

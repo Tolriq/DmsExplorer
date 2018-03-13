@@ -28,5 +28,5 @@ public interface ServerRepository {
     void stopSearch();
 
     @NonNull
-    Observable<DiscoveryEvent> discovery();
+    Observable<DiscoveryEvent> getDiscoveryEvent();
 }

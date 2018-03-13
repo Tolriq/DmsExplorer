@@ -11,10 +11,12 @@ public class DiscoveryEvent {
         LOST
     }
 
+    @NonNull
     public static DiscoveryEvent discover(@NonNull final Server server) {
         return new DiscoveryEvent(Type.DISCOVER, server);
     }
 
+    @NonNull
     public static DiscoveryEvent lost(@NonNull final Server server) {
         return new DiscoveryEvent(Type.LOST, server);
     }
