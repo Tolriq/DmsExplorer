@@ -9,6 +9,7 @@ import net.mm2d.dmsexplorer.core.domain.Server;
 import net.mm2d.dmsexplorer.domain.entity.ContentType;
 
 import io.reactivex.Observable;
+import io.reactivex.Single;
 
 /**
  * @author [大前良介 (OHMAE Ryosuke)](mailto:ryo@mm2d.net)
@@ -30,6 +31,16 @@ public class DlnaEntry implements Entry {
     @Override
     public boolean isDirectory() {
         return mCdsObject.isContainer();
+    }
+
+    @Override
+    public boolean isDeletable() {
+        return false;
+    }
+
+    @Override
+    public Single<Integer> delete() {
+        return null;
     }
 
     @NonNull

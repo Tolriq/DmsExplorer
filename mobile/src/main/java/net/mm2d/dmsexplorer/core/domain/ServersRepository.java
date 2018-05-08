@@ -1,16 +1,14 @@
 /*
- * Copyright (c) 2017 大前良介 (OHMAE Ryosuke)
+ * Copyright (c) 2018 大前良介 (OHMAE Ryosuke)
  *
  * This software is released under the MIT License.
  * http://opensource.org/licenses/MIT
  */
 
-package net.mm2d.dmsexplorer.core.infrastructure;
+package net.mm2d.dmsexplorer.core.domain;
 
+import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
-
-import net.mm2d.dmsexplorer.core.domain.DiscoveryEvent;
-import net.mm2d.dmsexplorer.core.domain.ServerRepository;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -28,30 +26,35 @@ public class ServersRepository implements ServerRepository {
         mRepositories = Arrays.asList(repositories);
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void initialize() {
         Observable.fromIterable(mRepositories)
                 .subscribe(ServerRepository::initialize);
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void terminate() {
         Observable.fromIterable(mRepositories)
                 .subscribe(ServerRepository::terminate);
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void reset() {
         Observable.fromIterable(mRepositories)
                 .subscribe(ServerRepository::reset);
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void startSearch() {
         Observable.fromIterable(mRepositories)
                 .subscribe(ServerRepository::startSearch);
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void stopSearch() {
         Observable.fromIterable(mRepositories)
