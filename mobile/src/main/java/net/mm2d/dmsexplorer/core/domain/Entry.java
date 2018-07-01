@@ -20,7 +20,7 @@ import io.reactivex.Single;
 public interface Entry {
     boolean isContent();
 
-    boolean isDirectory();
+    boolean isContainer();
 
     boolean isDeletable();
 
@@ -39,10 +39,7 @@ public interface Entry {
     String getName();
 
     @NonNull
-    String getPath();
-
-    @NonNull
-    Observable<Entry> readEntries(boolean noCache);
+    Observable<? extends Entry> readEntries(boolean noCache);
 
     @NonNull
     PlayList createPlayList(ContentType type);
